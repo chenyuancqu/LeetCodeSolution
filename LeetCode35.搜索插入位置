@@ -1,0 +1,10 @@
+class Solution:
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        if target in nums:
+            return nums.index(target)   # list函数：index（）返回相对应元素索引，如果未找到抛出异常
+        
+        # 如果target不在nums中，则将其加入nums列表中并使用sort进行排序，按以上方法输出target位置即可
+        else:
+            nums.append(target)
+            nums.sort()
+            return nums.index(target)
