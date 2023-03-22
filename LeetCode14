@@ -1,0 +1,24 @@
+class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+
+        '''
+        if not strs:return ""
+        minstr = min(strs, key = len)   # 最短字符串
+        lenmin = len(minstr)  # 最短字符串长度
+        length = len(strs)
+
+        for i in range(length):     # 字符数组元素个数
+            for j in range(i+1, length):
+                if strs[i][0] != strs[j][0]:
+                    return ""
+                for k in range(lenmin):
+                    while strs[i][k] != strs[j][k]:
+                        return strs[0][0:k]
+                        '''
+    # 使用python自带函数：字符串比较
+        minstr = min(strs)
+        maxstr = max(strs)
+        for i, j in enumerate(minstr):
+            if j != maxstr[i]:
+                return minstr[:i]
+        return minstr
