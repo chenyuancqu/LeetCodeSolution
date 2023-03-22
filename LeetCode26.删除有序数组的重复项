@@ -1,0 +1,7 @@
+class Solution:
+    def removeDuplicates(self, nums: List[int]) -> int:
+        # 逆序开始处理列表元素，防止删除过后产生的索引跳动
+        for i in range(len(nums)-1, -1, -1):
+            if nums.count(nums[i])>1:
+                del nums[i]
+        return len(nums)
