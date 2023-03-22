@@ -1,0 +1,40 @@
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        # 将输入链表转为列表进行操作
+        l1 = []
+        l2 = []
+
+        #完成对两个链表到列表的转换
+        if list1 == None:
+            l1 = []
+        else:
+            p1 = list1
+            while p1.next != None:
+                l1.append(p1.val)
+                p1 = p1.next
+            l1.append(p1.val)
+        if list2 == None:
+            l2 = []
+        else:
+            p2 = list2
+            while p2.next != None:
+                l2.append(p2.val)
+                p2 = p2.next
+            l2.append(p2.val)
+        
+        l = l1 + l2
+        l.sort()
+        if l == []:
+            return None
+        list3 = ListNode()   # 头结点
+        list3.val = l[0]
+        p3 = list3
+        for i in range(1,len(l)):
+            p3.next = ListNode(l[i])
+            p3 = p3.next
+        return list3
