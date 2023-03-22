@@ -1,0 +1,9 @@
+class Solution:
+    def isPalindrome(self, x: int) -> bool:
+        # 使用切片方法
+        # 先把int类型数据x转化为字符数组
+        l = list(str(x))
+        if l[::] == l[::-1]:
+            return True
+        else:
+            return False
