@@ -1,0 +1,31 @@
+class Solution:
+    def isValid(self, s: str) -> bool:
+        # 思路1：对字符串数组进行计数，对应元素个数相等返回true
+        # 思路2：首先判断字符串个数为奇数还是偶数，其次从0开始遍历
+        # 相对位置
+        while '()' in s or '{}' in s or '[]' in s:
+            s = s.replace('()', '')
+            s = s.replace('{}', '')
+            s = s.replace('[]', '')
+        return s == ''
+
+
+    """class Solution:
+    def isValid(self, s: str) -> bool:
+        #哈希表：key是左括号，value是右括号
+        #栈：左括号进栈，遇到右括号弹出栈顶元素
+        # maps = {'(': ')', '[': ']', '{': '}', '?': '?'}
+        # stack = ['?']
+        # for i in s:
+        #     if i in maps: #左括号入栈
+        #         stack.append(i)
+        #     elif maps[stack.pop()] != i: #右括号与栈顶元素不配对
+        #         return False 
+        # return len(stack) == 1: #栈中无左括号未配对
+
+        dic = {'{': '}',  '[': ']', '(': ')', '?': '?'}
+        stack = ['?']
+        for c in s:
+            if c in dic: stack.append(c)
+            elif dic[stack.pop()] != c: return False 
+        return len(stack) == 1
