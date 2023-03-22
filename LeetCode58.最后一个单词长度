@@ -1,0 +1,6 @@
+class Solution:
+    def lengthOfLastWord(self, s: str) -> int:
+        # 使用字符串分解函数，将s按空格分解为多个列表元素
+        lst = s.split()
+        # 返回列表最后一个元素长度
+        return len(lst[-1])
