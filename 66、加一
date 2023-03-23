@@ -1,0 +1,10 @@
+class Solution:
+    def plusOne(self, digits: List[int]) -> List[int]:
+        # 思路1：将列表转化为整数进行相加，随后再转回列表
+        temp = str(digits).replace("[","").replace("]","").replace(",","").replace(" ","")
+        temp = int(temp)
+        res = temp + 1
+        temp_str = str(res)
+        lst = list(temp_str)
+        lst = list(map(int, lst))
+        return lst
