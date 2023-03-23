@@ -1,8 +1,0 @@
-class Solution:
-    def removeElement(self, nums: List[int], val: int) -> int:
-        # 计算数组nums中val数量，以方便进行remove(remove每次只能删除第一个匹配项)
-        num = nums.count(val)
-        # 如果存在多个val，则一一进行删除
-        for i in range(num):
-            nums.remove(val)
-        return len(nums)
