@@ -1,0 +1,26 @@
+class Solution:
+    def mySqrt(self, x: int) -> int:
+        """ algorithm 1：traverse
+        for i in range(0, int(x/2) +2):
+            if i * i > x:
+                return i-1
+            if i * i == x:
+                return i
+
+        # algorithm 2: newton iteration
+        num = x
+        while num * num > x:
+            num = (num + x/num)//2
+        return int(num)
+        """
+        # algorithm 3: method of bisection
+        def find(a, b):
+            if b - a <= 1:
+                return a
+            c = int((a + b) / 2)
+            if c * c > x:
+                return find(a,c)
+            else:
+                return find(c,b)
+        return find(0,x+1)
+       
