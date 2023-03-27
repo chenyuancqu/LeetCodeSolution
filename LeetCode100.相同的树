@@ -1,0 +1,35 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    """
+    算法存在问题：
+    测试用力：
+    [1,1]
+    [1,null,1]
+    的中序遍历返回list相同
+        # algorithm1：使用二叉树的中序遍历（列表）进行对比
+        # 递归描述二叉树的中序遍历，方便笔记两棵树是否相同
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        if not root:
+            return []
+        left = self.inorderTraversal(root.left)
+        right = self.inorderTraversal(root.right)
+        return left + [root.val] + right
+    
+    # 如果相同则返回true
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+        return self.inorderTraversal(p) == self.inorderTraversal(q)
+    """
+    # algorithm2 递归解决
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+        if not p and not q:     # 两个节点都为空，返回true
+            return True
+        if not p or not q:      # 两个节点有一个不为空，则返回False
+            return False
+        if p.val != q.val:      # 两个节点根节点不同，则返回False
+            return False
+        return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
