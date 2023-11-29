@@ -1,0 +1,30 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int num = scanner.nextInt();
+
+        //write your code here......
+        System.out.println(convertDecimalToBinary(num));
+
+    }
+
+    // 十进制数转二进制
+    public static String convertDecimalToBinary(int decimalNumber){
+        StringBuilder binary = new StringBuilder();
+        // 判断如果十进制数为0，则直接输出字符0
+        if(decimalNumber == 0){
+            return "0";
+        }
+        // 对于非0数字，采用除2法，使用stringbuilder的插入（insert）方法，将余数插入到首位
+        while(decimalNumber > 0){
+            int reminder = decimalNumber % 2;
+            binary.insert(0, reminder);
+            decimalNumber /= 2;
+        }
+
+        return binary.toString();
+    }
+}
+
