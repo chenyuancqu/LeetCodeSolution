@@ -1,0 +1,40 @@
+//已知，纽约时间比北京时间慢12小时，请根据用户输入的北京时间输出相应的纽约时间，若用户输入错误的月份或日期等信息则将其顺加。例如用户输入2021 13 32 14 43 54则生成北京时间为：2022-02-01 14:43:54 纽约时间为：2022-02-01 02:43:54
+
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Scanner;
+import java.util.TimeZone;
+
+public class Main {
+    public static void main(String[] args) throws ParseException {
+        SimpleDateFormat sdfinput = new SimpleDateFormat("yyyy MM dd HH mm ss");
+        SimpleDateFormat sdfoutput = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Scanner in = new Scanner(System.in);
+        String str1 = in.nextLine();
+
+        //write your code here......
+        try{
+            // 将用户输入的数字解析为日期格式
+            Date beijingTime = sdfinput.parse(str1);
+            // 将输入的日期，格式化为输出格式并打印
+            System.out.println("北京时间为：" + sdfoutput.format(beijingTime));
+
+            // 转换为纽约时间
+            Date newYorkTime = adjustDateTime(beijingTime);
+            // 格式化并打印纽约时间
+            System.out.println("纽约时间为：" + sdfoutput.format(newYorkTime));
+        }
+        catch(ParseException e){
+            System.out.println("您输入的数据不合理");
+        }
+
+    }
+
+    // 更改为纽约时间
+    public static Date adjustDateTime(Date date){
+        long adjustedDateTime = date.getTime() - 12 * 60 * 60 * 1000;
+        return new Date(adjustedDateTime);
+    }
+}
