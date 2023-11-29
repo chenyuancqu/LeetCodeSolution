@@ -1,0 +1,22 @@
+import java.util.Calendar;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner console = new Scanner(System.in);
+        int year = console.nextInt();
+
+        //write your code here......
+        for(int month = Calendar.JANUARY; month <= Calendar.DECEMBER; month++){
+            int daysInMonth = getCurrentDays(year, month);
+            System.out.println(year + "年" + (month + 1) + "月:" + daysInMonth + "天");
+        }
+
+    }
+
+    public static int getCurrentDays(int year, int month){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, 1);  //1代表日期，表示该月份的第一天
+        return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+    }
+}
