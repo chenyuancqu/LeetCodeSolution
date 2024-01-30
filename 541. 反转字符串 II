@@ -1,0 +1,30 @@
+class Solution {
+    // 题目通俗解释：每隔k个反转k个，末尾不够k个时全部反转；
+    public String reverseStr(String s, int k) {
+        StringBuilder sb = new StringBuilder(s);
+        int length = sb.length();
+        // 使用循环列表每隔2k个字符进行处理
+        for (int i = 0; i < length; i += 2 * k) {
+            int left = i;
+
+            // 通过min实现不足k个字符时反转全部
+            int right = Math.min(i + k - 1, length - 1);
+            reverse(sb, left, right);
+        }
+        return sb.toString();
+        
+        
+    }
+
+    // 实现从left到right的字符反转
+    public void reverse(StringBuilder sb, int left, int right) {
+
+        while(left < right) {
+            char temp = sb.charAt(left);
+            sb.setCharAt(left, sb.charAt(right));
+            sb.setCharAt(right, temp);
+            left++;
+            right--;
+        }
+    }
+}
