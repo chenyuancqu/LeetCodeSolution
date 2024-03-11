@@ -1,0 +1,24 @@
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        // 新建一个hash表，键为排序后的字符，值为字符串
+        HashMap<String, List<String>> map = new HashMap<>();
+        for (String str : strs) {
+            // 给字符串排序——1.转为字符数组
+            char[] chars = str.toCharArray();
+            // 给字符串排序——2.对数组排序
+            Arrays.sort(chars);
+            String sortedStr = new String(chars);
+
+            // 将单词添加到hashMap对应键的值中
+            // 获取哈希表对应的value
+            List<String> list = map.getOrDefault(sortedStr, new ArrayList<>());
+            list.add(str);
+            map.put(sortedStr, list);
+        }
+
+        // 遍历输出hashmap的value
+        List<List<String>> result = new ArrayList(map.values());
+        return result;
+
+    }
+}
