@@ -9,21 +9,24 @@ class Solution {
 
         int maxLength = 0;
         for (int num : nums) {
-            // 获得左侧\右侧元素的value（连续长度）
-            int leftLength = map.getOrDefault(num - 1, 0);
-            int rightLength = map.getOrDefault(num + 1, 0);
+            if (!map.containsKey(num)) {
+                // 获得左侧\右侧元素的value（连续长度）
+                int leftLength = map.getOrDefault(num - 1, 0);
+                int rightLength = map.getOrDefault(num + 1, 0);
+                
+                int length = leftLength + rightLength + 1;
+
+                // 保持maxLength为最大
+                maxLength = Math.max(maxLength, length);
+
+                // 返回当前num的最长连续长度，并存入hashMap中
+                map.put(num, length);
+                // 更新连续的起始数字的连续长度为length
+                map.put(num - leftLength, length);
+                // 更新连续的结尾数字的连续长度为length
+                map.put(num + rightLength, length);
+            }
             
-            int length = leftLength + rightLength + 1;
-
-            // 保持maxLength为最大
-            maxLength = Math.max(maxLength, length);
-
-            // 返回当前num的最长连续长度，并存入hashMap中
-            map.put(num, length);
-            // 更新连续的起始数字的连续长度为length
-            map.put(num - leftLength, length);
-            // 更新连续的结尾数字的连续长度为length
-            map.put(num + rightLength, length);
         }
 
         return maxLength;
