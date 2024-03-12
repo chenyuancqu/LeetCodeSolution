@@ -1,0 +1,26 @@
+// 移动零
+
+class Solution {
+    public void moveZeroes(int[] nums) {
+        // 冒泡排序
+
+        // 定义一个left、一个right
+        int left = 0, right = 0;
+        while (right < nums.length) {
+            // right往右移动
+            if (nums[right] != 0) {
+                nums[left] = nums[right];
+                // left往前移动，给出下一个可交换位置
+                left++;
+            }
+            right++;
+        }
+
+        // 将left往后位置元素全改为0
+        while (left < nums.length) {
+            nums[left] = 0;
+            left++;
+        }
+
+    }
+}
