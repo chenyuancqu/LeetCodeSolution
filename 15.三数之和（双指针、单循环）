@@ -1,0 +1,38 @@
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (nums.length < 3) return result;
+        if (nums.length == 3 && Arrays.stream(nums).sum() != 0) return result;
+        // 对数组进行排序
+        Arrays.sort(nums);
+        // 遍历数组，对于每个元素 nums[i]，使用双指针技术在剩余元素中找到两个数，使得它们的和等于 -nums[i]。
+        for (int i = 0; i < nums.length - 2; i++) {
+            int left = i + 1, right = nums.length - 1, target = -nums[i];
+
+            // 如果相同，则跳过这个循环
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+
+            while (left < right) {
+                int sum = nums[left] + nums[right];
+                if (target < sum) {
+                    right--;
+                } else if (target > sum) {
+                    left++;
+                } else {
+                    result.add(Arrays.asList(nums[i], nums[left], nums[right]));
+
+                    // 跳过重复,此处可能存在多个相同，所以要用while跳过所有，而不是if
+                    while (left < right && nums[left] == nums[left+1]) left++;
+                    while (left < right && nums[right] == nums[right-1]) right--;
+
+                    left++;
+                    right--;
+
+                }
+            }
+        }
+        return result;
+    }
+}
