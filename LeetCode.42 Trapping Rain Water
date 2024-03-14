@@ -1,0 +1,51 @@
+class Solution {
+    public int trap(int[] height) {
+        // 方法2:优化，维护一个数组存放一个左右端最值，防止多次遍历
+        int sum = 0;
+        int[] maxToRight = new int[height.length];
+        maxToRight[height.length - 1] = height[height.length - 1];
+        for (int i = height.length - 2; i >= 0; i--) {
+            maxToRight[i] = Math.max(height[i+1], maxToRight[i+1]);
+        }
+        int maxToLeft = height[0];
+        for (int i = 1; i < height.length - 1; i++) {
+            maxToLeft = Math.max(height[i-1], maxToLeft);   // 因为是从左往右遍历，可以套进主循环
+            int miner = Math.min(maxToLeft, maxToRight[i]);
+            if (height[i] < miner) {
+                // 如果当前低，则装水=最矮-当前,如果当前高，则装水=0
+                sum += (miner - height[i]);
+            }
+        }
+        return sum;
+
+        /* 
+        // 思路：按列求水
+        int count = 0; // 装水值
+        // 1. 遍历当前height数组
+        for (int i = 1; i < height.length - 1; i++) {
+            // 找出左边最高墙高度
+            int maxToLeft = 0;
+            for (int j = 0; j < i; j++) {
+                maxToLeft = Math.max(maxToLeft, height[j]);
+            }
+            int maxToRight = 0;
+            // 找出右边墙最高高度
+            for (int k = i + 1; k < height.length; k++) {
+                maxToRight = Math.max(maxToRight, height[k]);
+            }
+
+            // 找出左右最矮墙
+            int miner = Math.min(maxToLeft, maxToRight);
+
+            // 当前墙与最矮墙相比大小
+            if (height[i] < miner) {
+                // 如果当前低，则装水=最矮-当前,如果当前高，则装水=0
+                count += (miner - height[i]);
+            } else {
+                count+=0;
+            }     
+        }
+        return count;
+        */
+    }
+}
