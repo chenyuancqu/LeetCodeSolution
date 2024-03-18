@@ -1,0 +1,37 @@
+class Solution {
+    public List<Integer> findAnagrams(String s, String p) {
+        List<Integer> res = new ArrayList<>();
+        int sLen = s.length(), pLen = p.length();
+        if (pLen > sLen) {
+            return res;
+        }
+
+        // 使用char元素的assic码作为数组index（26个）
+        int[] window_count = new int[26]; //用于维护窗口滑动过程中每个字符的数量  
+        int[] p_count = new int[26]; //用于统计字符p的每个字符数量  
+
+
+        // 初始统计
+        for (int i = 0; i < pLen; i++) {
+            window_count[s.charAt(i) - 'a']++;  
+            p_count[p.charAt(i) - 'a']++;
+        }
+
+        // 判断初始窗口是否满足异位词
+        if (Arrays.equals(window_count, p_count)) {
+            res.add(0);
+        }
+
+        // 滑动窗口
+        for (int i = 0; i < sLen - pLen; i++) {
+            window_count[s.charAt(i) - 'a']--;  // 左指针移动（左指针对应元素-1）
+            window_count[s.charAt(i + pLen) - 'a']++;     // 右指针移动（右指针对应元素+1）
+
+            // 判断是否满足异位词条件
+            if(Arrays.equals(window_count, p_count)) {
+                res.add(i + 1); // 窗口左边界index
+            }
+        }
+        return res;
+    }
+}
