@@ -1,0 +1,18 @@
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        // 滑动窗口法
+        int n = s.length();
+        int ans = 0;
+        HashSet<Character> set = new HashSet<>();   // 新建一个hashset用来判断是否有重复字符
+        int left = 0, right = 0;
+        while (left < n && right < n) {
+            if (!set.contains(s.charAt(right))) {
+                set.add(s.charAt(right++));  // 如果不在set中，向set中插入并往后移
+                ans = Math.max(ans, right - left);   // 计算最大子串
+            } else {
+                set.remove(s.charAt(left++));    // 如果在，则将起始位置往后推一位
+            }
+        }
+        return ans;  
+    }
+}
