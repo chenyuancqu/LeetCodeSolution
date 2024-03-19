@@ -1,0 +1,32 @@
+class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        // 处理异常情况
+        int n = nums.length;
+        if (n * k == 0) return new int[0];
+        if (k == 1) return nums;
+
+        int[] res = new int[n - k + 1];
+        // 新建一个双端队列存储索引值，头部出掉窗口过期元素，尾部进入新鲜元素
+        Deque<Integer> deque = new ArrayDeque<>();
+
+        for (int i = 0; i < n; i++) {
+            // 除去窗口过期元素
+            while (!deque.isEmpty() && deque.peek() < i - k + 1) {
+                deque.poll();
+            }
+
+            // 新元素比较
+            while (!deque.isEmpty() && nums[i] > nums[deque.peekLast()]) {
+                deque.pollLast();
+            }
+
+            deque.offer(i);
+
+            if (i >= k - 1) {
+                res[i - k + 1] = nums[deque.peek()];
+            }
+        }
+        return res;
+
+    }
+}
