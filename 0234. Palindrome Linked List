@@ -1,0 +1,96 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+ // 算法1 ： 暴力解法
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        // 回文指的是逆序与正序一样，或者从前往后与从后往前一样
+        // 思路：逆序链表，对比两个链表
+        // 逆转链表
+        ListNode pre = null;
+        ListNode cur = head;
+        while(cur != null) {
+            ListNode newNode = new ListNode(cur.val);   // 新建一个结点存储当前结点的值
+            newNode.next = pre;     // 新结点的next指针指向pre
+
+            pre = newNode;  // 更新pre为新建，之后就会不断被指向
+            cur = cur.next; // 原结点向后遍历
+        }
+
+        ListNode temp = head;
+        // 头节点pre与head的比较
+        while(head.next != null) {
+            if (pre.val != head.val) return false;
+            pre = pre.next;
+            head = head.next;
+        }
+
+        return true;
+
+
+    }
+}
+
+
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+ // 算法2
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        // 找到链表的中间结点——快慢指针法
+        ListNode fast = head;
+        ListNode low = head;
+        while (fast.next != null && fast.next.next != null) {
+            fast = fast.next.next;
+            low = low.next;
+        }
+        // 中间或中间前一个结点：low
+        // 将后一半链表逆序与前一半比较
+        ListNode secondHalf = reverseLinkedList(low.next);
+        while (secondHalf != null) {
+            if (head.val != secondHalf.val) return false;
+            head = head.next;
+            secondHalf = secondHalf.next;
+        }
+        return true;
+
+
+    }
+
+
+    public ListNode reverseLinkedList(ListNode head) {
+        // 反转链表，时间复杂度O(n)
+        ListNode pre = null;
+        ListNode cur = head;
+        ListNode after = null;
+
+        while (cur != null) {
+            // 留后路
+            after = cur.next;
+
+            // 行动
+            cur.next = pre;
+
+            // 下一轮准备工作
+            pre = cur;
+            cur = after;
+        }
+        return pre;
+    }
+}
