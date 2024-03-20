@@ -1,0 +1,26 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        if (head == null) return head;
+        ListNode pre = null;
+        ListNode cur = head;
+        ListNode after = null;
+        while(cur != null) {
+            after = cur.next;   // 先保存当前结点的下一个结点
+            cur.next = pre; // 将cur的next指针指向pre，断了cur与after结点的联系，此时用此前保存的after切换cur
+            pre = cur;  // 更新指针,重复操作
+            cur = after;
+        }
+        return pre;
+
+    }
+}
