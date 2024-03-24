@@ -23,4 +23,8 @@ jobs:
       run: |
         sed -i 's|<!-- START_FILE_COUNT:files -->.*<!-- END_FILE_COUNT -->|<!-- START_FILE_COUNT:files -->'"$(echo ${{ steps.count.outputs.count }})"'<!-- END_FILE_COUNT -->|' README.md
       commit_message: Update file count
+      git config --local user.email "action@github.com"
+      git config --local user.name "GitHub Action"
+      git add README.md
+      git commit -m "Update file count"
       git push
