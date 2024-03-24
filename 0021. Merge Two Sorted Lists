@@ -1,40 +1,48 @@
-# Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, val=0, next=None):
-#         self.val = val
-#         self.next = next
-class Solution:
-    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
-        # 将输入链表转为列表进行操作
-        l1 = []
-        l2 = []
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        /* // 递归法
+        if (list1 == null) {
+            return list2;
+        } else if (list2 == null) {
+            return list1;
+        } else if (list1.val < list2.val) {
+            list1.next = mergeTwoLists(list1.next, list2);
+            return list1;   //  返回给搞完的list1
+        } else {
+            list2.next = mergeTwoLists(list2.next, list1);
+            return list2;
+        }
+        */
 
-        #完成对两个链表到列表的转换
-        if list1 == None:
-            l1 = []
-        else:
-            p1 = list1
-            while p1.next != None:
-                l1.append(p1.val)
-                p1 = p1.next
-            l1.append(p1.val)
-        if list2 == None:
-            l2 = []
-        else:
-            p2 = list2
-            while p2.next != None:
-                l2.append(p2.val)
-                p2 = p2.next
-            l2.append(p2.val)
-        
-        l = l1 + l2
-        l.sort()
-        if l == []:
-            return None
-        list3 = ListNode()   # 头结点
-        list3.val = l[0]
-        p3 = list3
-        for i in range(1,len(l)):
-            p3.next = ListNode(l[i])
-            p3 = p3.next
-        return list3
+        // 迭代法
+        ListNode prehead = new ListNode(-1);
+
+        ListNode prev = prehead;
+
+        while (list1 != null && list2 != null) {
+            if (list1.val <= list2.val) {
+                prev.next = list1;
+                list1 = list1.next;
+            } else {
+                prev.next = list2;
+                list2 = list2.next;
+            }
+            prev = prev.next;
+        }
+
+        // 此时合并结束时，如果两个链表不等长，则会剩下一个链表有东西
+        prev.next = list1 == null ? list2 : list1;
+
+        return prehead.next;
+    }
+}
