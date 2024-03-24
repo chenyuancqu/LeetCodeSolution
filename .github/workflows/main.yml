@@ -1,0 +1,26 @@
+name: Update File Count
+
+on:
+  push:
+    branches:
+      - main  # 更新的分支
+
+jobs:
+  update_file_count:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Count Files
+      id: count
+      run: |
+        file_count=$(find . -type f | wc -l)
+        echo "::set-output name=count::$file_count"
+
+    - name: Update README
+      run: |
+        sed -i 's|<!-- START_FILE_COUNT:files -->.*<!-- END_FILE_COUNT -->|<!-- START_FILE_COUNT:files -->'"$(echo ${{ steps.count.outputs.count }})"'<!-- END_FILE_COUNT -->|' README.md
+      commit_message: Update file count
+      git push
