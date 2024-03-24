@@ -1,0 +1,29 @@
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        // 原地算法
+        // 使用标记数组
+        int row = matrix.length;    // 行数量
+        int col = matrix[0].length; // 列数量
+        int[] rowTagList = new int[row];
+        int[] colTagList = new int[col];
+
+        // 编辑行标记数组
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (matrix[i][j] == 0) {
+                    rowTagList[i] = 1;
+                    colTagList[j] = 1;
+                }
+            }
+        }
+
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (rowTagList[i] == 1 || colTagList[j] == 1) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+
+    }
+}
