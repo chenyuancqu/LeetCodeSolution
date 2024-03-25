@@ -1,0 +1,56 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+// 链表排序
+class Solution {
+    public ListNode sortList(ListNode head) {
+        // 归并排序
+        if (head == null || head.next == null) return head;
+
+        // 找到链表中点
+        ListNode fast = head.next;
+        ListNode slow = head;
+
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+
+        ListNode mid = slow.next;
+        slow.next = null;
+        ListNode left = sortList(head);
+        ListNode right = sortList(mid);
+
+        return merge(left, right);
+
+    }
+
+    // 合并两个有序链表
+    public ListNode merge(ListNode list1, ListNode list2) {
+        // 迭代法
+        ListNode dummy = new ListNode(-1);
+        ListNode cur = dummy;
+
+        while (list1 != null && list2 != null) {
+            if (list1.val <= list2.val) {
+                cur.next = list1;
+                list1 = list1.next;
+            } else {
+                cur.next = list2;
+                list2 = list2.next;
+            }
+            cur = cur.next;
+        }
+
+        cur.next = list1 == null ? list2 : list1;
+        return dummy.next;
+    }
+}
+//leetcode submit region end(Prohibit modification and deletion)
