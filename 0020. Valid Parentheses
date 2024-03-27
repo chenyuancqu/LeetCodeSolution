@@ -29,3 +29,32 @@ class Solution:
             if c in dic: stack.append(c)
             elif dic[stack.pop()] != c: return False 
         return len(stack) == 1
+
+
+
+
+// Java
+
+class Solution {
+    public boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
+        for (char c : s.toCharArray()) {
+            if (c == '(' || c == '[' || c == '{') {
+                stack.push(c);
+            } else {
+                if (stack.isEmpty()) {
+                    return false;
+                }
+
+                char top = stack.pop(); // 弹出栈顶元素做比较
+                if ((top == '(' && c != ')') ||
+                    (top == '[' && c != ']') ||
+                    (top == '{' && c != '}')) {
+                        return false;
+                    }
+            }
+        }
+        return stack.isEmpty();
+
+    }
+}
