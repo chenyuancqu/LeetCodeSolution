@@ -1,0 +1,30 @@
+class Solution {
+    public Node copyRandomList(Node head) {
+        if (head == null) return null;
+
+        // 思路，先复制链表，后面处理random节点
+        Map<Node, Node> map = new HashMap<>();
+        // step1:复制链表
+        Node prev = new Node(0);
+        Node curr = prev;
+
+        while (head != null) {
+            Node temp = new Node(head.val); // 新建新的节点
+            curr.next = temp;
+
+            map.put(head, temp);
+            head = head.next;
+        }
+
+        //step2:处理random节点
+        curr = prev.next;
+        while (curr != null) {
+            curr.random = map.get(curr.random); // 通过原节点找到新节点
+            curr = curr.next;
+        }
+
+
+        return prev.next;
+        
+    }
+}
