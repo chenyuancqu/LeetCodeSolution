@@ -1,0 +1,16 @@
+// 腾讯实习一面手撕代码题
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        // 利用矩阵特性，从右上角开始搜索，如果当前数字比target大则向下搜索，比当前数字小则向左搜索
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int row = 0, col = n - 1;
+        while (row < m && col >= 0) {
+            if (matrix[row][col] == target) return true;
+            else if (matrix[row][col] > target) col--;
+            else  row++;
+        }
+        return false;
+        
+    }
+}
