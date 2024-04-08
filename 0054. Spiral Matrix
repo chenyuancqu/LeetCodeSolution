@@ -1,0 +1,33 @@
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        int row = 0, col = 0, count = 0;
+        int m = matrix.length;
+        int n = matrix[0].length;
+
+        // 标志数组，如果访问过就将对应元素置为1
+        int[][] visited = new int[m][n];
+        int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}}; // 右、下、左、上
+        int directionIndex = 0;
+        List<Integer> result = new ArrayList<>();
+
+        while (count < m * n) {
+            result.add(matrix[row][col]);
+            visited[row][col] = 1;
+
+            // 判断方向是否超出
+            int nextRow = row + directions[directionIndex][0];
+            int nextCol = col + directions[directionIndex][1];
+            if (nextRow < 0 || nextRow >= m || nextCol < 0 || nextCol >= n || visited[nextRow][nextCol] == 1){
+                directionIndex = (directionIndex + 1) % 4;
+            }
+
+            row += directions[directionIndex][0];
+            col += directions[directionIndex][1];
+
+            count++;
+        }
+
+        return result;
+
+    }
+}
