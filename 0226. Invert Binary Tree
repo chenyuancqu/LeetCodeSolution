@@ -1,0 +1,32 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+
+class Solution {
+    public TreeNode invertTree(TreeNode root) {
+        // 确定递归函数的参数和返回值，参数：root节点，返回值：TreeNode
+
+        // 确定终止条件
+        if (root == null) return root;
+
+        // 单层递归逻辑,先交换子节点，再交换父节点
+        TreeNode left = invertTree(root.left);
+        TreeNode right = invertTree(root.right);
+        root.right = left;
+        root.left = right;
+        return root;
+    }
+
+}
