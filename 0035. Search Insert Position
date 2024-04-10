@@ -1,3 +1,4 @@
+Python:
 class Solution:
     def searchInsert(self, nums: List[int], target: int) -> int:
         if target in nums:
@@ -8,3 +9,18 @@ class Solution:
             nums.append(target)
             nums.sort()
             return nums.index(target)
+
+
+
+Java:
+class Solution {
+    public int searchInsert(int[] nums, int target) {
+        int l = 0, r = nums.length;
+        while (l < r) {
+            int mid = l + (r - l) / 2;
+            if (target <= nums[mid]) r = mid;
+            else l = mid + 1;
+        }
+        return r;
+    }
+}
