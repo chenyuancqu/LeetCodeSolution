@@ -1,0 +1,41 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public void flatten(TreeNode root) {
+        List<TreeNode> list = new ArrayList<TreeNode>();
+        preorderTraversal(root, list);
+        int size = list.size();
+        // 先先序遍历，后构造链条
+        for (int i = 0; i < size-1; i++) {
+            TreeNode prev = list.get(i);
+            TreeNode curr = list.get(i+1);
+            prev.right = curr;
+            prev.left = null;
+
+        }
+    
+
+    }
+
+    public void preorderTraversal (TreeNode node, List<TreeNode> list) {
+        if (node == null) return;
+
+        list.add(node);
+        preorderTraversal(node.left, list);
+        preorderTraversal(node.right, list);
+
+    }
+}
