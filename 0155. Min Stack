@@ -1,0 +1,32 @@
+// 思路：通过辅助栈来记录栈最小值元素
+class MinStack {
+    Stack<Integer> stack;
+    Stack<Integer> minStack;
+
+
+    public MinStack() {
+        stack = new Stack<>();
+        minStack = new Stack<>();
+        // 为了与第一个入栈元素比较
+        minStack.push(Integer.MAX_VALUE);
+    }
+    
+    public void push(int val) {
+        stack.push(val);
+        // 最小值栈入栈栈顶与当前入栈元素最小值，保持栈顶元素是主栈最小值
+        minStack.push(Math.min(minStack.peek(), val));
+    }
+    
+    public void pop() {
+        stack.pop();
+        minStack.pop();
+    }
+    
+    public int top() {
+        return stack.peek();
+    }
+    
+    public int getMin() {
+        return minStack.peek();
+    }
+}
