@@ -1,4 +1,4 @@
-// 方法1 ： 哈希表
+// 方法1 ： 使用哈希表存储元素出现的次数，输出出现次数为1的key值
 class Solution {
     public int singleNumber(int[] nums) {
         if (nums.length == 1) return nums[0];
@@ -24,7 +24,7 @@ class Solution {
     }
 }
 
-// 方法2:异或运算
+// 方法2:思路：使用异或的结合律，即所有两个的元素最终都会被消掉
 class Solution {
     public int singleNumber(int[] nums) {
         int single = 0; // 用来与其他数字异或
