@@ -1,0 +1,16 @@
+// 思路：f(x) = f(x - 1) + f(x - 2);
+
+class Solution {
+    public int climbStairs(int n) {
+        if (n == 1) return 1;
+        if (n == 2) return 2;
+        int l = 1, r = 2;
+        int res = 0;
+        for (int i = 3; i <= n; i++) {
+            res = l + r;
+            l = r;
+            r = res;
+        }
+        return res;
+    }
+}
