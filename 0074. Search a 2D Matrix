@@ -1,0 +1,18 @@
+// 暴力解法：二分查找，技巧解法：从右上开始即可辗转腾挪
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        // 思路：从右上开始找，如果当前数大于target则向下找，如果小于则向左找
+        int row = 0, col = matrix[0].length - 1;
+        while (row < matrix.length && col >= 0) {
+            if (matrix[row][col] > target) {
+                col--;
+            } else if (matrix[row][col] < target) {
+                row++;
+            } else {
+                return true;
+            }
+        }
+        return false;
+
+    }
+}
