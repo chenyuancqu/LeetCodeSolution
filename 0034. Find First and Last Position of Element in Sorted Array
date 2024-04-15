@@ -1,0 +1,43 @@
+// 二分查找寻找对应值的左右边界思想：平常的二分查找找到mid=target，寻找右边界的方法是判断mid>=target时，left=mid+1，返回left
+
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        int leftIndex = findLeftIndex(nums, target);
+        int rightIndex = findRightIndex(nums, target);
+        if (rightIndex == -2 || leftIndex == -2) return new int[]{-1, -1};
+        if (rightIndex - leftIndex > 1) return new int[]{leftIndex + 1, rightIndex - 1};
+        return new int[]{-1, -1};
+    }
+
+    public int findLeftIndex(int[] nums, int target) {
+        // 查找左边界
+        int left = 0, right = nums.length - 1;
+        int ans = -2;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] < target) {
+                left = mid + 1;
+            } else if (nums[mid] >= target) {
+                right = mid - 1;
+                ans = right;
+            }
+        }
+        return ans;
+    }
+
+    public int findRightIndex(int[] nums, int target) {
+        // 查找右边界
+        int left = 0, right = nums.length - 1;
+        int ans = -2;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] <= target) {
+                left = mid + 1;
+                ans = left;
+            } else if (nums[mid] > target) {
+                right = mid - 1;
+            }
+        }
+        return ans;
+    }
+}
