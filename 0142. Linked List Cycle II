@@ -1,3 +1,34 @@
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        // 思路：使用快慢指针法，定义一个slow一个fast，slow每次走一个，fast每次走两个，在fast不为空或fast.next不为空情况下，判断slow与fast是否相等，相等则表示有环，循环结束则无环
+        if (head == null) return null;
+        ListNode fast = head;
+        ListNode slow = head;
+
+        // 判断是否有环
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+
+            // 环存在
+            if (slow == fast) {
+                ListNode ptr = head;
+                
+                while (ptr != fast) {
+                    ptr = ptr.next;
+                    fast = fast.next;
+                }
+                return ptr;
+            }
+        }
+        return null;
+        
+    }
+}
+
+
+
+
 /**
  * Definition for singly-linked list.
  * class ListNode {
