@@ -1,0 +1,20 @@
+class Solution {
+    public int[] sortedSquares(int[] nums) {
+        // 双指针法，定义一个新的结果数组，双指针分别从左右开动
+        int n = nums.length;
+        int[] result = new int[n];
+        int l = 0, r = n - 1;
+        int k = n - 1;
+        while (l <= r) {
+            if (nums[l] * nums[l] >= nums[r] * nums[r]) {
+                result[k] = nums[l] * nums[l];
+                l++;
+            } else {
+                result[k] = nums[r] * nums[r];
+                r--;
+            }
+            k--;
+        }
+        return result;
+    }
+}
