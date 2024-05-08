@@ -1,0 +1,23 @@
+class Solution {
+    public int rob(int[] nums) {
+        int n = nums.length;
+        if (n == 0) return 0;
+        
+        
+        // 动态规划
+        // 1. 定义子问题：从i个房子能偷到的最大金额【与原问题相似，但规模较小的问题，子问题扩大是可以概括原问题的】
+
+        // 2. 子问题的递归关系：偷前i-1个，第i个不偷或者 偷前i-2个+第i个，选最大值，第0和第1已知
+        
+        // 3. 确定DP数组的计算顺序，DP数组每一个元素对应一个子问题
+        int[] dp = new int[n+1];
+        dp[0] = 0;
+        dp[1] = nums[0];
+
+        for (int i = 2; i <= n; i++) {
+            dp[i] = Math.max(dp[i - 1], dp[i - 2] + nums[i - 1]);
+        }
+
+        return dp[n];
+    }
+}
