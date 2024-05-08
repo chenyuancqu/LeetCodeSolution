@@ -1,0 +1,21 @@
+class Solution {
+    public List<List<Integer>> generate(int numRows) {
+        // 两层循环，使用两个arrayList来保存结果
+        List<List<Integer>> res = new ArrayList<>();
+        for (int i = 0; i < numRows; i++) {
+            List<Integer> subRes = new ArrayList<>();
+            for (int j = 0; j <= i; j++) {
+                if (j == 0 || j == i) {
+                    subRes.add(1);
+                } else {
+                    subRes.add(res.get(i - 1).get(j - 1) + res.get(i - 1).get(j));
+                }
+            }
+            res.add(subRes);
+        }
+
+        return res;
+
+
+    }
+}
