@@ -1,0 +1,22 @@
+class Solution {
+    public List<Integer> partitionLabels(String s) {
+        // 思路：维护一个字母最后出现位置，随后遍历s字符串，维护start与end（遍历到的字母，子串必须包含其最晚出现的位置）
+        // 存储每个字母的最后一个位置
+        int[] nums = new int[26];
+        for (int i = 0; i < s.length(); i++) {
+            nums[s.charAt(i) - 'a'] = i;
+        }
+
+        int start = 0, end = 0;
+        // 新建一个结果集
+        List<Integer> res = new ArrayList<>();
+        for (int i = 0; i < s.length(); i++) {
+            end = Math.max(end, nums[s.charAt(i) - 'a']);
+            if (i == end) {
+                res.add(end - start + 1);
+                start = end + 1;
+            }
+        }
+        return res;
+    }
+}
