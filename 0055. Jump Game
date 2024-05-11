@@ -1,0 +1,17 @@
+class Solution {
+    public boolean canJump(int[] nums) {
+        // 思路：通过维护一个cover变量，如果元素可cover的值大于length返回true，否则返回false，cover的值由i滚动更新
+        int n = nums.length;
+        if (nums == null) return false;
+        // 贪心算法
+        int cover = 0, index = 0;
+        while (index < n && index <= cover) {
+            cover = Math.max(nums[index] + index, cover);
+            index++;
+            if (cover >= n - 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
