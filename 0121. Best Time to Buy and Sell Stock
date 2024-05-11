@@ -1,0 +1,21 @@
+class Solution {
+    public int maxProfit(int[] prices) {
+        /*贪心思想
+        * 1. 前i天买入股票一定是在股票最低点，则保持的cost最低即可；
+        * 2. 第i天卖出会考虑，前i-1天的最大profit与当天卖出（price-cost）的最大值
+        * 以此思想，即可找出最大利润
+        */
+        int n = prices.length;
+        int cost = Integer.MAX_VALUE;
+        int profit = 0;
+        for (int i = 0; i < n; i++) {
+            // 通过cost维护一个最小成本值
+            cost = Math.min(cost, prices[i]);
+
+            // 通过profit始终记录最大利润值，即使cost变化，profit仍可保护前面的max
+            profit = Math.max(profit, prices[i] - cost);
+        }
+        return profit;
+
+    }
+}
