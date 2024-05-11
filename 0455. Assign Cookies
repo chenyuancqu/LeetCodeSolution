@@ -1,0 +1,24 @@
+class Solution {
+    public int findContentChildren(int[] g, int[] s) {
+        // 大饼干尽量满足胃口大的娃娃
+        Arrays.sort(g);
+        Arrays.sort(s);
+
+        int n = g.length;
+        int start = s.length - 1;
+        int count = 0;
+        // 遍历胃口，先满足大胃口
+        for (int i = n - 1; i >= 0; i--) {
+            //如果大胃口满足则count++， 饼干--；否则i--，饼干不动，该小孩满足不了
+
+            // 此处start >= 0 一定要写前面，避免出现s[start]
+            if (start >= 0 && g[i] <= s[start]) {       
+                count++;
+                start--;
+            }
+        }
+
+        return count;
+
+    }
+}
