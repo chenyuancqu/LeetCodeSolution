@@ -1,0 +1,31 @@
+class Solution {
+    public String longestPalindrome(String s) {
+        if (s == null || s.length() == 0) return "";
+        // 中心拓展法，遍历s，找到每个字母的回文子串最大长度（分为奇数个与偶数个），及时更新并返回索引
+        int start = 0, end = 0; // 定义启示与结束标记，用于返回结果
+        for (int i = 0; i < s.length(); i++) {
+            int len1 = returnAroundCenter(s, i, i);  // 奇数
+            int len2 = returnAroundCenter(s, i, i + 1);
+            int len = Math.max(len1, len2);
+            // 如果回文子串长度更大，则更新回文子串索引
+            if (len > end - start + 1) {
+                // 得到start索引位置
+                start = i - (len - 1) / 2;
+                end = i + len / 2;
+            }
+        }
+        // substring是左闭右开的，所以end+1
+        return s.substring(start, end + 1);
+
+
+    }
+
+    public int returnAroundCenter(String s, int left, int right) {
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            left--;
+            right++;
+        }
+        // 这里循环结束时，left与right分别指向边界的下一个位置，所以return (right+1) - (left-1) + 1
+        return right - left - 1;
+    }
+}
