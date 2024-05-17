@@ -1,0 +1,32 @@
+class Solution {
+    public int numIslands(char[][] grid) {
+        // 思路：遇到一个没有遍历过的节点陆地，计数器+1，遍历该节点能遍历到的所有陆地节点并标记
+        // 遇到标记过的陆地节点和海洋节点直接跳过
+
+        int res = 0;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                // 找到1，则res+1并执行dfs，否则跳过
+                if (grid[i][j] == '1') {
+                    res++;
+                    dfs(grid, i, j);
+                }
+            }
+        }
+        return res;
+
+
+    }
+
+    // DFS算法
+    public void dfs(char[][] grid, int i, int j) {
+        // 边界判定（边界超界或遍历到了0）结束执行
+        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == '0') return;
+        // 标记访问过的地方
+        grid[i][j] = '0';
+        dfs(grid, i - 1, j);    // 上
+        dfs(grid, i + 1, j);    // 下
+        dfs(grid, i, j - 1);    // 左
+        dfs(grid, i, j + 1);    // 右
+    }
+}
