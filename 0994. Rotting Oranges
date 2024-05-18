@@ -1,0 +1,45 @@
+class Solution {
+    public int orangesRotting(int[][] grid) {
+        int[][] move = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+        int m = grid.length;
+        int n = grid[0].length;
+        // 思路： 将所有腐烂橘子在第一步同时放入队列中，进行多源广度优先搜索
+        Deque<Integer> queue = new ArrayDeque<>();
+        Map<Integer, Integer> depth = new HashMap<>();
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 2) {
+                    int code = i * n + j;
+                    queue.add(code);    // 放入队列中
+                    depth.put(code, 0);
+                }
+            }
+        }
+
+        int ans = 0;
+        while (!queue.isEmpty()) {
+            int code = queue.remove();
+            int i = code / n, j = code % n;
+            for (int k = 0; k < 4; k++) {
+                int nexti = i + move[k][0];
+                int nextj = j + move[k][1];
+                if (nexti >= 0 && nexti < m && nextj >= 0 && nextj < n && grid[nexti][nextj] == 1) {
+                    grid[nexti][nextj] = 2;
+                    int nextCode = nexti * n + nextj;
+                    queue.add(nextCode);
+                    depth.put(nextCode, depth.get(code) + 1);
+                    ans = depth.get(nextCode);
+                }
+            }
+        }
+
+        for (int[] row: grid) {
+            for (int v: row) {
+                if (v == 1) {
+                    return -1;
+                }
+            }
+        }
+        return ans;
+    }
+}
