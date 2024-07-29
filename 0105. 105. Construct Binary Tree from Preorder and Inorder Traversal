@@ -1,0 +1,51 @@
+import java.util.HashMap;
+
+public class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode() {}
+    TreeNode(int val) { this.val = val; }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
+class Solution {
+    private HashMap<Integer, Integer> hashMap;
+
+    public TreeNode myBuildTree(int[] preorder, int[] inorder, int preorderLeft, int preorderRight, int inorderLeft, int inorderRight) {
+        // 循环终止条件
+        if (preorderLeft > preorderRight) {
+            return null;
+        }
+
+        // 找出根结点并构建
+        TreeNode root = new TreeNode(preorder[preorderLeft]);
+        int inorder_root = hashMap.get(preorder[preorderLeft]);
+
+        // 左子树结点数量
+        int leftSubTree_number = inorder_root - inorderLeft;
+
+        // 构建左子树
+        root.left = myBuildTree(preorder, inorder, preorderLeft + 1, preorderLeft + leftSubTree_number, inorderLeft, inorder_root - 1);
+        // 构建右子树
+        root.right = myBuildTree(preorder, inorder, preorderLeft + leftSubTree_number + 1, preorderRight, inorder_root + 1, inorderRight);
+        return root;
+    }
+
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        // 思路：递归法，先构建一个中序遍历的哈希表，用于方便使用前序遍历中的根结点找出对应索引值，随后使用递归构建左右子树
+        int n = inorder.length;
+        TreeNode treeNode = new TreeNode();
+        hashMap = new HashMap<Integer, Integer>();
+        for (int i = 0; i < n; i++) {
+            hashMap.put(inorder[i], i);
+        }
+        return myBuildTree(preorder, inorder, 0, n-1, 0, n-1);
+    }
+
+
+}
