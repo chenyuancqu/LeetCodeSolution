@@ -14,38 +14,51 @@ public class TreeNode {
 }
 
 class Solution {
-    private HashMap<Integer, Integer> hashMap;
+    // 将中序遍历中的元素全部存入hashMap中方便进行O（1）提取
+    private HashMap<Integer, Integer> inOrderMap;
 
-    public TreeNode myBuildTree(int[] preorder, int[] inorder, int preorderLeft, int preorderRight, int inorderLeft, int inorderRight) {
-        // 循环终止条件
-        if (preorderLeft > preorderRight) {
-            return null;
-        }
+    /**
+     * 求二叉树的子树
+     * @param preorder 前序数组
+     * @param inorder 中序数组
+     * @param preorder_left 所在子树的前序数组左边界
+     * @param preorder_right 所在子树的前序数组右边界
+     * @param inorder_left 所在子树的中序数组左边界
+     * @param inorder_right 所在子树的中序数组右边界
+     * @return 返回根节点
+     */
+    public TreeNode mybuildTree(int[] preorder, int[] inorder, int preorder_left, int preorder_right,
+                                int inorder_left, int inorder_right) {
+        if (preorder_left > preorder_right) {return null;}
 
-        // 找出根结点并构建
-        TreeNode root = new TreeNode(preorder[preorderLeft]);
-        int inorder_root = hashMap.get(preorder[preorderLeft]);
+        // 前序遍历的第一个元素就是根节点
+        int preorder_root = preorder_left;
+        // 在中序遍历中定位根节点
+        int inorder_root = inOrderMap.get(preorder[preorder_left]);
 
-        // 左子树结点数量
-        int leftSubTree_number = inorder_root - inorderLeft;
+        // 构建根节点
+        TreeNode root = new TreeNode(preorder[preorder_root]);
 
         // 构建左子树
-        root.left = myBuildTree(preorder, inorder, preorderLeft + 1, preorderLeft + leftSubTree_number, inorderLeft, inorder_root - 1);
-        // 构建右子树
-        root.right = myBuildTree(preorder, inorder, preorderLeft + leftSubTree_number + 1, preorderRight, inorder_root + 1, inorderRight);
+        int leftSubTree = inorder_root - inorder_left;
+        root.left = mybuildTree(preorder, inorder, preorder_left + 1, preorder_left + leftSubTree, inorder_left, inorder_root - 1);
+        root.right = mybuildTree(preorder, inorder, preorder_left + leftSubTree + 1, preorder_right, inorder_root + 1, inorder_right);
         return root;
     }
 
+
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        // 思路：递归法，先构建一个中序遍历的哈希表，用于方便使用前序遍历中的根结点找出对应索引值，随后使用递归构建左右子树
+        // 思路：递归法，通过前序遍历找到根结点，随后根据中序遍历区分左右子树，递归求解
+
+        // 1. inorder放入hashMap中
         int n = inorder.length;
-        TreeNode treeNode = new TreeNode();
-        hashMap = new HashMap<Integer, Integer>();
+        inOrderMap = new HashMap<Integer, Integer>();
         for (int i = 0; i < n; i++) {
-            hashMap.put(inorder[i], i);
+            inOrderMap.put(inorder[i], i);
         }
-        return myBuildTree(preorder, inorder, 0, n-1, 0, n-1);
+
+        // 2. 调用方法进行构造
+        return mybuildTree(preorder, inorder, 0, n - 1, 0, n - 1);
+
     }
-
-
 }
