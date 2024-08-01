@@ -1,0 +1,32 @@
+class Solution {
+
+    // 递归子函数
+    public int rootSum(TreeNode root, long target) {
+        if (root == null) {
+            return 0;
+        }
+
+        int res = 0;
+        int val = root.val;
+        if (val == target) {
+            res++;
+        }
+        // 根节点的值 = 左节点值 + 右节点值
+        res += rootSum(root.right, target - val);
+        res += rootSum(root.left, target - val);
+        return res;
+
+    }
+
+    public int pathSum(TreeNode root, int targetSum) {
+        // 如果二叉树为空，返回0
+        if (root == null) {
+            return 0;
+        }
+        int res = rootSum(root, targetSum);
+        // 深度遍历所有子节点
+        res += pathSum(root.left, targetSum);
+        res += pathSum(root.right, targetSum);
+        return res;
+    }
+}
