@@ -1,0 +1,27 @@
+class Solution {
+
+    private TreeNode ans;
+
+    // 构造方法，为ans赋初值，防止空指针异常
+    public Solution() {
+        this.ans = null;
+    }
+
+    // 深度优先算法，判断节点root是否包含目标节点p或q
+    public Boolean dfs(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null) return false; // 如果root为空，返回false
+
+        boolean leftSon = dfs(root.left, p, q); // 判断左子树是否包含
+        boolean rightSon = dfs(root.right, p, q);   // 判断右子树是否包含
+
+        if (leftSon && rightSon || (root.val == p.val || root.val == q.val) && (leftSon || rightSon)) {
+            ans = root;
+        }
+        return leftSon || rightSon || (root.val == p.val || root.val == q.val);
+    }
+
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        dfs(root, p, q);
+        return this.ans;
+    }
+}
