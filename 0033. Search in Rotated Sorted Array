@@ -1,0 +1,32 @@
+class Solution {
+    public int search(int[] nums, int target) {
+        int n = nums.length;
+        int left = 0, right = n - 1;
+        while (left <= right) {
+            
+            int mid = left + (right - left) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            }
+
+            // 判断left-mid是否为升序
+            if (nums[left] <= nums[mid]) {
+                // 如果是升序，看看target在不在这个区间之内，不在的话出去查找
+                if (nums[left] <= target && target < nums[mid]) {
+                    right = mid - 1;
+                } else {
+                    left = mid + 1;
+                }
+            } else {
+                // 看看target在不在mid-right这个升序区间内
+                if (nums[mid] < target && target <= nums[right]) {
+                    left = mid + 1;
+                } else {
+                    right = mid - 1;
+                }
+            }
+        }
+        return -1;
+    }
+}
+//leetcode submit region end(Prohibit modification and deletion)
