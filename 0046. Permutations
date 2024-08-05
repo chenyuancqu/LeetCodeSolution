@@ -1,0 +1,30 @@
+class Solution {
+    // 结果集数组与临时数组
+    List<List<Integer>> res = new ArrayList<>();
+    List<Integer> temp = new ArrayList<>();
+    boolean[] used;
+
+    public List<List<Integer>> permute(int[] nums) {
+        used = new boolean[nums.length];
+        // 回溯法，通过递归+userd数组
+        permuteHelper(nums);
+        return res;
+    }
+
+    public void permuteHelper(int[] nums) {
+        if (temp.size() == nums.length) {
+            res.add(new ArrayList<>(temp));
+            return;
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            if (used[i]) continue;
+            temp.add(nums[i]);
+            used[i] = true;
+            permuteHelper(nums);
+            // 进行回溯
+            used[i] = false;
+            temp.remove(temp.size() - 1);
+        }
+    }
+}
