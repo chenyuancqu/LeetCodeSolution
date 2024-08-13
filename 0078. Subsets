@@ -1,0 +1,30 @@
+import java.util.ArrayList;
+import java.util.List;
+
+class Solution {
+    
+    List<Integer> path = new ArrayList<>();
+    List<List<Integer>> result = new ArrayList<>();
+    
+    public List<List<Integer>> subsets(int[] nums) {
+        mySubsets(nums, 0);
+        return result;
+    }
+
+    // 递归函数
+    public void mySubsets(int[] nums, int startIndex) {
+        // 将子集加入到res中
+        result.add(new ArrayList<>(path));
+        // 递归结束条件
+        if (startIndex >= nums.length) {
+            return;
+        }
+        for (int i = startIndex; i < nums.length; i++) {
+            path.add(nums[i]);
+            mySubsets(nums, i + 1);
+            // 将元素弹出，方便下一次递归
+            path.remove(path.size() - 1);
+        }
+    }
+}
+//leetcode submit region end(Prohibit modification and deletion)
