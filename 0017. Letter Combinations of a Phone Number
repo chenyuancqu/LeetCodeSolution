@@ -1,0 +1,53 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+class Solution {
+    StringBuilder path = new StringBuilder();
+    List<String> result = new ArrayList<>();
+    HashMap<Character, String> map = new HashMap<Character, String>();
+
+
+    public List<String> letterCombinations(String digits) {
+        if (digits == null || digits.length() == 0) {
+            return result;
+        }
+
+        // 将字符能代表的字母存入hash表中
+        map.put('2', "abc");
+        map.put('3', "def");
+        map.put('4', "ghi");
+        map.put('5', "jkl");
+        map.put('6', "mno");
+        map.put('7', "pqrs");
+        map.put('8', "tuv");
+        map.put('9', "wxyz");
+
+        // 2-9可以组合的所有数字序列
+        mySub(digits, 0);
+        return result;
+
+
+    }
+
+    public void mySub(String digits, int index) {
+        if (index == digits.length()) {
+            // 遍历完收获子节点
+            result.add(path.toString());
+            return;
+        }
+
+        // 获取每个字符对应的字母
+        String letters = map.get(digits.charAt(index));
+        // 对每个字母进行遍历
+        for (int i = 0; i < letters.length(); i++) {
+            path.append(letters.charAt(i));
+            // 开始递归
+            mySub(digits, index + 1);
+            // 此处path.substring(0, path.length() - 1)对原字符串无修改，所以需要赋值一次
+            path.deleteCharAt(path.length() - 1);
+        }
+    }
+
+
+}
