@@ -1,0 +1,31 @@
+import java.util.ArrayList;
+import java.util.List;
+
+class Solution {
+    List<Integer> paths = new ArrayList<>();
+    List<List<Integer>> res = new ArrayList<>();
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        backtracking(candidates, target, 0, 0);
+        return res;
+
+    }
+
+    public void backtracking(int[] candidates, int target, int sum, int startIndex) {
+        // 终止条件
+        if (sum > target) return;
+        if (sum == target) {
+            res.add(new ArrayList<>(paths));
+            return;
+        }
+        for (int i = startIndex; i < candidates.length; i++) {
+            paths.add(candidates[i]);
+            sum += candidates[i];
+            // 递归
+            backtracking(candidates, target, sum, i);
+            // 回溯
+            paths.remove(paths.size() - 1);
+            sum -= candidates[i];
+        }
+    }
+}
+//leetcode submit region end(Prohibit modification and deletion)
