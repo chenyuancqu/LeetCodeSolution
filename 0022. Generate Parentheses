@@ -1,0 +1,29 @@
+import java.util.ArrayList;
+import java.util.List;
+
+class Solution {
+    List<String> res = new ArrayList<>();
+    public List<String> generateParenthesis(int n) {
+        backtracking(n, 0, 0, "");
+        return res;
+    }
+
+    public void backtracking(int n, int left, int right, String string) {
+        // 终止条件
+        if (right > left) return;
+        if (right == left && left == n) {
+            res.add(string);
+            return;
+        }
+        
+        // 如果左括号还没到头，则可以再加
+        if (left < n) {
+            backtracking(n, left + 1, right, string + "(");
+        }
+        // 如果右括号小于左括号，则可以再加右括号
+        if (right < left) {
+            backtracking(n, left, right + 1, string + ")");
+        }
+    }
+}
+//leetcode submit region end(Prohibit modification and deletion)
