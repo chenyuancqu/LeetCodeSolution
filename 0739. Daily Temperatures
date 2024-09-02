@@ -1,0 +1,27 @@
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedList;
+
+class Solution {
+    public int[] dailyTemperatures(int[] temperatures) {
+        // 单调栈法：适合去求元素左边或右边比他大或小的第一个元素
+
+        int[] res = new int[temperatures.length];
+        // 新建单调栈
+        Deque<Integer> stack = new LinkedList<Integer>();
+        for (int i = 0; i < temperatures.length; i++) {
+            // 遍历元素入栈
+            int temperature = temperatures[i];
+            while (!stack.isEmpty() && temperature > temperatures[stack.peek()]) {
+                // 当栈非空且遍历元素大于栈顶元素，就可以直接输出
+                int prevIndex = stack.pop(); // 将栈顶元素弹出
+
+                // 此时栈顶元素小于当前遍历元素，那么他是该栈顶元素的右边最大值（因为小于等于的都会加入进来）
+                res[prevIndex] = i - prevIndex;
+            }
+            stack.push(i);
+        }
+        return res;
+    }
+}
+//leetcode submit region end(Prohibit modification and deletion)
