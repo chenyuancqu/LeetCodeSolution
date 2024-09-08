@@ -1,0 +1,23 @@
+class Solution {
+    public int lastStoneWeightII(int[] stones) {
+        // 本题意为将石头分为重量尽可能相同的两堆
+        // 确定dp数组：为容量为j的背包，最多可以背的重量为dp[j]
+        int sum = 0;
+        for (int stone : stones) {
+            sum += stone;
+        }
+        int target = sum / 2;
+        int[] dp = new int[target + 1];
+        for (int i = 0; i < stones.length; i++) {
+            for (int j = target; j >= stones[i] ; j--) {
+                dp[j] = Math.max(dp[j], dp[j - stones[i]] + stones[i]);
+            }
+        }
+
+        // 返回最大可装重量与一半的差值
+//        return (target - dp[target]) * 2;
+        // 第一堆石头重量为dp[target] 另一对就是sum - dp[target]，也就是上面求得了最靠近一半重量的石头，两个相减即可
+        return sum - 2 * dp[target];
+    }
+}
+//leetcode submit region end(Prohibit modification and deletion)
