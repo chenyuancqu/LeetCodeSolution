@@ -1,0 +1,62 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+        // 创建虚拟头结点
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+
+        ListNode start = dummy, end = dummy;
+
+        // 拆分原来链表为k个
+        while (true) {
+            for (int i = 0; i < k && end != null; i++) {
+                end = end.next;
+            }
+            // 如果为空说明不足k个，则break
+            if (end == null) {
+                break;
+            }
+
+            // 存储start与end的下一个结点，方便拼接
+            ListNode startNext = start.next;    // 该组链表的尾结点
+            ListNode endNext = end.next;    // 下一组链表的头结点
+
+            // 断开当前组链表尾结点
+            end.next = null;
+            // 拼接左边界：头结点的前一个结点指向反转后的头结点
+            start.next = reverseList(start.next);
+            // 拼接右边界：该组尾结点指向下组头结点
+            startNext.next = endNext;
+
+
+            // 更新左右边界
+            start = end = startNext;    // 第二组链表的头结点的前一个结点
+
+        }
+        return dummy.next;
+
+    }
+
+    // 反转链表
+    public ListNode reverseList(ListNode head) {
+        ListNode prev = null;
+        ListNode curr = head;
+        ListNode after = null;  // 这里不赋值，用于在循环开始初期进行赋值使用，避免后面赋值造成空指针异常
+        while (curr != null) {
+            after = curr.next;  // 记录curr的next值，方便往后走
+            curr.next = prev;   // curr的指针指向prev
+            prev = curr;
+            curr = after;
+        }
+        return prev;
+    }
+}
