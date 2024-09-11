@@ -1,0 +1,22 @@
+class Solution {
+    public int minSubArrayLen(int target, int[] nums) {
+        // 滑动窗口
+        int sum = 0;
+        int start = 0;
+        int res = Integer.MAX_VALUE;    //记录窗口大小
+        for (int end = 0; end < nums.length; end++) {
+            sum += nums[end]; // 记录当前窗口元素之和
+            while (sum >= target) {
+                res = Math.min(res, end - start + 1);
+                sum -= nums[start++];
+            }
+
+
+        }
+        return res == Integer.MAX_VALUE ? 0 : res;
+
+    }
+
+
+}
+//leetcode submit region end(Prohibit modification and deletion)
