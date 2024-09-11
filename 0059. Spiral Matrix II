@@ -1,0 +1,46 @@
+class Solution {
+    public int[][] generateMatrix(int n) {
+        int[][] matrix = new int[n][n];
+        int startX = 0, startY = 0; //每圈起点
+        int offset = 1;
+        int count = 1;  //矩阵要填写数字
+        int loop = 1;   // 当前圈数
+        int i, j;   // 行与列
+        // 控制圈数
+        while (loop <= n / 2) {
+
+            // 往右走
+            for (j = startY; j < n - offset; j++) {
+                matrix[startX][j] = count++;
+            }
+
+            // 往下走
+            for (i = startX; i < n - offset; i++) {
+                matrix[i][j] = count++; // i在最下行，j在最后一列
+            }
+
+            // 往左走，此时j在原处
+            for (; j > startY; j--) {
+                matrix[i][j] = count++;
+            }
+
+            // 往上走
+            for (; i > startX; i--) {
+                matrix[i][j] = count++;
+            }
+
+            loop++;
+            offset++;
+            startX++;
+            startY++;
+        }
+
+        // n为奇数时，单独处理中心元素
+        if (n % 2 != 0) {
+            matrix[n / 2][n / 2] = count++;
+        }
+
+        return matrix;
+    }
+}
+//leetcode submit region end(Prohibit modification and deletion)
